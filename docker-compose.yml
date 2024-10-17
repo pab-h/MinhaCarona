@@ -1,0 +1,26 @@
+services:
+  minhacarona_api:
+    container_name: minhacarona_api
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+    depends_on:
+      - minhacarona_db
+    links:
+      - minhacarona_db
+    volumes:
+      - .:/usr/app
+
+  minhacarona_db:
+    container_name: minhacarona_db
+    image: postgres:13
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5433:5432"
