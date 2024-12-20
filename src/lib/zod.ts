@@ -16,3 +16,12 @@ export const createUserSchema = z.object({
         .string({required_error: "password is requested"})
         .min(6, "password length must be greater than 6")
 });
+
+export const loginUserSchema = z.object({
+    email: z
+        .string({required_error: "email is requested"})
+        .email({message: "bad formatted email"}),
+    password: z
+        .string({required_error: "password is requested"})
+        .min(6, "password length must be greater than 6")
+});

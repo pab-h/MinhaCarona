@@ -5,6 +5,7 @@ import swaggerUi from "swagger-ui-express";
 import swaggerDocs from "../../docs"
 
 import UsersRoutes from "./users";
+import AuthRoutes from "./auth";
 
 const routes = Router();
 
@@ -15,6 +16,7 @@ routes.use(
 );
 
 routes.use("/users", UsersRoutes);
+routes.use("/auth", AuthRoutes);
 
 routes.use(handlerError);
 

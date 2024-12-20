@@ -1,6 +1,5 @@
 import { UserType } from "../../types/UserType";
 import { ArgumentNotValidError } from "../error/ArgumentNotValidError";
-import { UserPrismaRepository } from "../../repository/prisma/UserPrismaRepository";
 import { UserRepository } from "../../repository/interface/UserRepository";
 
 type CreateUserServiceRequest = Omit<
