@@ -2,6 +2,8 @@ import { UserType } from "../../types/UserType";
 import { UserRepository } from "../interface/UserRepository";
 import { randomBytes } from "crypto";
 
+import bcrypt from "bcryptjs"
+
 export class UserInMemoryRepository implements UserRepository {
 
     public users: UserType[];
@@ -17,11 +19,14 @@ export class UserInMemoryRepository implements UserRepository {
             password
         }: Omit<UserType, "id" | "createdAt" | "updatedAt">
     ): Promise<UserType> {
+
+        const passwordHash = await bcrypt.hash(password, 7);
+
         const user: UserType = {
             id: randomBytes(7).toString("hex"),
             email,
             name,
-            password,
+            password: passwordHash,
             createdAt: new Date(),
             updatedAt: new Date()
         };

@@ -29,6 +29,11 @@ export default {
             parameters: [
                 { $ref: "#/components/schemas/IdParamPathSchema" }
             ],
+            security: [
+                {
+                  bearerAuth: []
+                }
+            ],
             responses: {
                 "200": {
                     description: "OK",
