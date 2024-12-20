@@ -12,6 +12,7 @@ export default {
         }
     ],
     tags: [
-        "Users"
+        "Users",
+        "Auth"
     ]
 }
