@@ -4,8 +4,9 @@ import {handlerError} from "../../middleware/ErrorHandler"
 import swaggerUi from "swagger-ui-express";
 import swaggerDocs from "../../docs"
 
-import UsersRoutes from "./users";
-import AuthRoutes from "./auth";
+import usersRoutes from "./users";
+import authRoutes from "./auth";
+import vehiclesRoutes from './vehicles';
 
 const routes = Router();
 
@@ -15,8 +16,9 @@ routes.use(
     swaggerUi.setup(swaggerDocs)
 );
 
-routes.use("/users", UsersRoutes);
-routes.use("/auth", AuthRoutes);
+routes.use("/users", usersRoutes);
+routes.use("/auth", authRoutes);
+routes.use("/vehicles", vehiclesRoutes);
 
 routes.use(handlerError);
 
