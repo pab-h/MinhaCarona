@@ -1,3 +1,4 @@
+import { VehicleEnum } from "@prisma/client";
 import z from "zod";
 
 export const idSchema = z.object({
@@ -24,4 +25,18 @@ export const loginUserSchema = z.object({
     password: z
         .string({required_error: "password is requested"})
         .min(6, "password length must be greater than 6")
+});
+
+export const createVehicleSchema = z.object({
+    type: z
+        .nativeEnum(VehicleEnum, {required_error: "Tipo do veículo é requerido"}),
+    plate: z
+            .string({required_error: "A placa do veículo é requerida"}),
+    model: z
+            .string({required_error: "A modelo do veículo é requerida"}),
+    color: z
+            .string({required_error: "A cor do veículo é requerida"}),    
+    ownerId: z
+            .string({required_error: "A cor do veículo é requerida"})
+            .uuid({ message: "O id é um UUID"}),
 });
