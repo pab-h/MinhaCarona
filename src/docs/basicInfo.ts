@@ -13,6 +13,7 @@ export default {
     ],
     tags: [
         "Users",
-        "Auth"
+        "Auth",
+        "Vehicles"
     ]
 }
