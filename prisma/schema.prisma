@@ -20,6 +20,27 @@ model User {
   email         String    @unique
   password      String    
 
+  rides         Ride[]
+
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  @@map("users")
+}
+
+model Ride {
+  id            String    @id @default(uuid())
+  origin        String
+  destination   String
+  date          DateTime
+  seats         Int
+  vehicle       String
+  ownerId       String
+
+  owner         User      @relation(fields: [ownerId], references: [id])
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("rides")
 }
