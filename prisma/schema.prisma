@@ -16,10 +16,12 @@ datasource db {
 
 model User {
   id            String    @id @default(uuid())
+  
   name          String
   email         String    @unique
   password      String    
 
+  vehicles      Vehicle[]
   rides         Ride[]
 
   createdAt     DateTime  @default(now())
@@ -28,19 +30,44 @@ model User {
   @@map("users")
 }
 
+enum VehicleEnum {
+  CAR
+  MOTORCYCLE 
+}
+
+model Vehicle {
+  id            String      @id @default(uuid())
+ 
+  type          VehicleEnum
+  plate         String      @unique
+  model         String    
+  color         String    
+  ownerId       String
+
+  rides         Ride[]
+  owner         User        @relation(fields: [ownerId], references: [id])
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@map("vehicles")
+}
+
 model Ride {
-  id            String    @id @default(uuid())
+  id            String      @id @default(uuid())
+
   origin        String
   destination   String
   date          DateTime
   seats         Int
-  vehicle       String
   ownerId       String
+  vehicleId     String    
 
-  owner         User      @relation(fields: [ownerId], references: [id])
+  owner         User        @relation(fields: [ownerId], references: [id])
+  vehicle       Vehicle     @relation(fields: [vehicleId], references: [id])
 
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 
   @@map("rides")
 }
