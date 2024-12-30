@@ -9,6 +9,16 @@ export class VehicleInMemoryRepository implements VehicleRepository {
     public constructor() {
         this.vehicles = [];
     }
+    
+    public async findById(id: string): Promise<VehicleType | null> {
+        const vehicleFound = this.vehicles.find(vehicle => vehicle.id == id);
+
+        if (!vehicleFound) {
+            return null;
+        }
+
+        return vehicleFound;   
+    }
 
     public async create(
         {

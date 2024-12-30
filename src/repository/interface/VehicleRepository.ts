@@ -9,4 +9,6 @@ export interface VehicleRepository {
 
     findByPlate(plate: string): Promise<VehicleType | null>;
 
+    findById(id: string): Promise<VehicleType | null>;
+
 }

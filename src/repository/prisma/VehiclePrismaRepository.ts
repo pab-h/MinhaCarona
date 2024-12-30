@@ -3,6 +3,10 @@ import { VehicleType } from "../../types/VehicleType";
 import { VehicleRepository } from "../interface/VehicleRepository";
 
 export class VehiclePrismaRepository implements VehicleRepository {
+    public async findById(id: string): Promise<VehicleType | null> {
+        return await prisma.vehicle.findUnique({ where: {id} });
+    }
+
     public async create(
         {
             color,
