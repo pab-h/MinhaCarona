@@ -1,13 +1,15 @@
 import usersSchemas from "./users";
 import paramsSchemas from "./params";
 import authSchemas from "./auth";
+import vehiclesSchemas from "./vehicles";
 
 export default {
     components: {
         schemas: {
             ... usersSchemas,
             ... paramsSchemas,
-            ... authSchemas
+            ... authSchemas,
+            ... vehiclesSchemas
         },
         securitySchemes: {
             bearerAuth: {
