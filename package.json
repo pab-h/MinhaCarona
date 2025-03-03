@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "npx tsx watch src/server.ts",
+    "dev": "npm run prisma && npx tsx watch src/server.ts",
+    "prisma": "npx prisma generate && npx prisma migrate deploy",
+    "studio": "npx prisma studio --port 3001",
     "container": "docker compose up",
     "getInContainer": "docker compose exec -it minhacarona_api /bin/bash",
-    "migrate": "npx prisma migrate deploy",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
@@ -20,13 +21,13 @@
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/swagger-ui-express": "^4.1.6",
-    "prisma": "^6.1.0",
+    "prisma": "^6.4.1",
     "swagger-ui-express": "^5.0.1",
     "tsx": "^4.19.0",
     "vitest": "^2.1.1"
   },
   "dependencies": {
-    "@prisma/client": "^6.1.0",
+    "@prisma/client": "^6.4.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
