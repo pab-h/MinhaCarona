@@ -8,7 +8,7 @@ export class CreateUserController {
         const {
             email,
             name,
-            password: password
+            password
         } = createUserSchema.parse(req.body);
 
         const createUserService = new CreateUserService(
@@ -21,6 +21,12 @@ export class CreateUserController {
             password
         });
 
-        res.status(201).json(user);
+        res.status(201).json({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt
+        });
     }
 }
