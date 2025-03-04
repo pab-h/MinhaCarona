@@ -8,10 +8,12 @@ import { VehiclePrismaRepository } from "../../../repository/prisma/VehiclePrism
 
 export class CreateVehicleController {
     public async execute(req: Request, res: Response) {
+
+        const ownerId = req.user.id;
+
         const {
             color,
             model,
-            ownerId,
             plate,
             type
         } = createVehicleSchema.parse(req.body);

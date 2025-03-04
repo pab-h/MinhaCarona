@@ -8,6 +8,6 @@ const createRideController = new CreateRideController();
 
 routes.use(ensureAuthentication);
 
-routes.post("/:id", createRideController.execute);
+routes.post("/", createRideController.execute);
 
 export default routes;

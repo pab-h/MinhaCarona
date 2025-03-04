@@ -36,9 +36,6 @@ export const createVehicleSchema = z.object({
             .string({required_error: "A modelo do veículo é requerida"}),
     color: z
             .string({required_error: "A cor do veículo é requerida"}),    
-    ownerId: z
-            .string({required_error: "A cor do veículo é requerida"})
-            .uuid({ message: "O id é um UUID"}),
 });
 
 export const createRideSchema = z.object({
@@ -47,6 +44,7 @@ export const createRideSchema = z.object({
     destination: z
         .string({ required_error: " é requrida" }),
     date: z
+        .coerce
         .date({ required_error: " é requrida" }),
     seats: z
         .number({ required_error: " é requrida" }),

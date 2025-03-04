@@ -1,8 +1,8 @@
-import { Prisma } from '@prisma/client';
 import type { NextFunction, Request, Response } from 'express';
 import { TokenExpiredError } from 'jsonwebtoken';
 import { ArgumentNotValidError } from '../service/error/ArgumentNotValidError';
 import { ZodError } from 'zod';
+import { TokenAuthorizationMissingError } from '../service/error/TokenAuthorizationMissingError';
 
 export function handlerError(
   error: Error,
@@ -16,6 +16,11 @@ export function handlerError(
       message: 'Error de validação',
       issues: error.issues,
     });
+  }
+
+  if (error instanceof TokenAuthorizationMissingError) {
+    console.error(error);
+    return res.status(401).json({ message: 'Token inexistente' });
   }
 
   if (error instanceof TokenExpiredError) {
