@@ -5,11 +5,11 @@ import { CreateRideService } from "../../../service/ride/CreateRideService";
 import { RidePrismaRepository } from "../../../repository/prisma/RidePrismaRepository";
 import { UserPrismaRepository } from "../../../repository/prisma/UserPrismaRepository";
 import { VehiclePrismaRepository } from "../../../repository/prisma/VehiclePrismaRepository";
-import { createRideSchema, idSchema } from "../../../lib/zod";
+import { createRideSchema } from "../../../lib/zod";
 
 export class CreateRideController {
     public async execute(req: Request, res: Response) {
-        const { id: ownerId } = idSchema.parse(req.params);
+        const ownerId = req.user.id;
 
         const {
             date,
