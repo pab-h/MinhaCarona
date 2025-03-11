@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { CreateVehicleController } from "../controller/vehicle/CreateVehicleController";
 import ensureAuthentication from "../../middleware/ensureAuthentication"
+import { VehicleController } from "../controller/VehicleController";
 
 const routes = Router();
 
-const createVehicleController = new CreateVehicleController();
+const vehicleController = new VehicleController();
 
 routes.use(ensureAuthentication);
 
-routes.post("/",createVehicleController.execute);
+routes.post("/", vehicleController.create);
 
 export default routes;

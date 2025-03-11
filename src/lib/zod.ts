@@ -1,5 +1,5 @@
-import { VehicleEnum } from "@prisma/client";
 import z from "zod";
+import { VehicleEnum } from "../types/VehicleType";
 
 export const idSchema = z.object({
     id: z

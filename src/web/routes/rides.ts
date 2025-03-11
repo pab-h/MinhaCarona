@@ -1,13 +1,13 @@
 import { Router } from "express";
 import ensureAuthentication from "../../middleware/ensureAuthentication";
-import { CreateRideController } from "../controller/ride/CreateRideController";
+import { RideController } from "../controller/RideController";
 
 const routes = Router();
 
-const createRideController = new CreateRideController(); 
+const rideController = new RideController(); 
 
 routes.use(ensureAuthentication);
 
-routes.post("/", createRideController.execute);
+routes.post("/", rideController.create);
 
 export default routes;

@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 
-import { CreateRideService } from "../../../service/ride/CreateRideService";
+import { CreateRideService } from "../../service/ride/CreateRideService";
 
-import { RidePrismaRepository } from "../../../repository/prisma/RidePrismaRepository";
-import { UserPrismaRepository } from "../../../repository/prisma/UserPrismaRepository";
-import { VehiclePrismaRepository } from "../../../repository/prisma/VehiclePrismaRepository";
-import { createRideSchema } from "../../../lib/zod";
+import { RidePrismaRepository } from "../../repository/prisma/RidePrismaRepository";
+import { UserPrismaRepository } from "../../repository/prisma/UserPrismaRepository";
+import { VehiclePrismaRepository } from "../../repository/prisma/VehiclePrismaRepository";
+import { createRideSchema } from "../../lib/zod";
 
-export class CreateRideController {
-    public async execute(req: Request, res: Response) {
+export class RideController {
+    public async create(req: Request, res: Response) {
         const ownerId = req.user.id;
 
         const {

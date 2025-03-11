@@ -1,5 +1,9 @@
-import { VehicleEnum } from "@prisma/client";
 import { BaseModelType } from "./BaseModelType";
+
+export enum VehicleEnum {
+    CAR        = 'CAR',
+    MOTORCYCLE = 'MOTORCYCLE'
+}
 
 export type VehicleType = {
     type: VehicleEnum;

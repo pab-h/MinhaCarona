@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 
-import { createVehicleSchema } from "../../../lib/zod";
-import { CreateVehicleService } from "../../../service/vehicle/CreateVehicleService";
+import { createVehicleSchema } from "../../lib/zod";
+import { CreateVehicleService } from "../../service/vehicle/CreateVehicleService";
 
-import { UserPrismaRepository } from "../../../repository/prisma/UserPrismaRepository";
-import { VehiclePrismaRepository } from "../../../repository/prisma/VehiclePrismaRepository";
+import { UserPrismaRepository } from "../../repository/prisma/UserPrismaRepository";
+import { VehiclePrismaRepository } from "../../repository/prisma/VehiclePrismaRepository";
 
-export class CreateVehicleController {
-    public async execute(req: Request, res: Response) {
+export class VehicleController {
+    public async create(req: Request, res: Response) {
 
         const ownerId = req.user.id;
 

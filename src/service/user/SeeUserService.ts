@@ -22,9 +22,11 @@ export class SeeUserService {
     ): Promise<SeeUserServiceResponse> {
         const userFound = await this.repository.findById(id);
 
+        console.log(userFound);
+
         if (!userFound) {
             throw new ArgumentNotValidError(
-                "user not exists"
+                "O usuario não existe"
             );
         }
 

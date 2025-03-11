@@ -1,15 +1,12 @@
 import { Router } from "express";
 
-import { CreateUserController } from "../controller/user/CreateUserController";
-import { SeeUserController } from "../controller/user/SeeUserController";
-import ensureAuthentication from "../../middleware/ensureAuthentication";
+import { UserController } from "../controller/UserController";
 
-const createUserController = new CreateUserController();
-const seeUserController = new SeeUserController();
+const userController = new UserController();
 
 const routes = Router();
 
-routes.post("/", createUserController.execute);
-routes.get("/:id", ensureAuthentication, seeUserController.execute);
+routes.post("/", userController.create);
+routes.get("/:id", userController.see);
 
 export default routes;
