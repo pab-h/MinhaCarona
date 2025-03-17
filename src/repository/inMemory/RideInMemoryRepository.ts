@@ -35,4 +35,14 @@ export class RideInMemoryRepository implements RideRepository {
         return ride;
     }
 
+    public async findById(id: string): Promise<RideType | null> {
+        const userFound = this.rides.find(ride => ride.id == id);
+
+        if (!userFound) {
+            return null;
+        }
+
+        return userFound;
+    }
+
 }
