@@ -91,6 +91,50 @@ describe('Register service', () => {
     }).not.toThrow();
   });
 
+  it('should be not able to register a reservation with already requested', async () => {
+
+    const { user: driver } = await createUserService.execute({
+      email: 'pedro@gmail.com',
+      name: 'Pedro',
+      password: '123456',
+    });
+
+    const { user: passenger } = await createUserService.execute({
+      email: 'passenger@gmail.com',
+      name: 'passenger',
+      password: '123456',
+    });
+
+    const { vehicle } = await createVehicleService.execute({
+      color: "red",
+      model: "kayasawi",
+      ownerId: driver.id,
+      plate: "14455",
+      type: "MOTORCYCLE"
+    })
+
+    const { ride } = await createRideService.execute({
+      date: new Date(),
+      destination: "aqui",
+      origin: "ali",
+      ownerId: driver.id,
+      seats: 6,
+      vehicleId: vehicle.id
+    });
+
+    expect(async () => {
+      await createReservationService.execute({
+        ownerId: passenger.id,
+        rideId: ride.id,
+      });
+
+      await createReservationService.execute({
+        ownerId: passenger.id,
+        rideId: ride.id,
+      });
+    }).rejects.toBeInstanceOf(ArgumentNotValidError);
+  });
+
   it('should be not able to register a reservation with non exist ride', async () => {
 
     const { user: passenger } = await createUserService.execute({

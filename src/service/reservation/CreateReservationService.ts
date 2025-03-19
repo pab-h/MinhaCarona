@@ -57,6 +57,17 @@ export class CreateReservationService {
             );
         }
 
+        const reservations = await this.repository.findByRideId(rideFound.id);
+
+        const isUserAlreadIn = reservations
+            .some(reservation => reservation.ownerId == userFound.id);
+
+        if (isUserAlreadIn) {
+            throw new ArgumentNotValidError(
+                "O usuário só pode solicitar uma reserva apenas uma vez"
+            );
+        }
+
         const reservation = await this.repository.create({
             ownerId,
             rideId
