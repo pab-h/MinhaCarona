@@ -15,17 +15,18 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(uuid())
+  id            String          @id @default(uuid())
   
   name          String
-  email         String    @unique
+  email         String          @unique
   password      String    
 
   vehicles      Vehicle[]
   rides         Ride[]
+  reservations  Reservations[]
 
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
 
   @@map("users")
 }
@@ -54,7 +55,7 @@ model Vehicle {
 }
 
 model Ride {
-  id            String      @id @default(uuid())
+  id            String          @id @default(uuid())
 
   origin        String
   destination   String
@@ -63,11 +64,35 @@ model Ride {
   ownerId       String
   vehicleId     String    
 
-  owner         User        @relation(fields: [ownerId], references: [id])
-  vehicle       Vehicle     @relation(fields: [vehicleId], references: [id])
+  owner         User            @relation(fields: [ownerId], references: [id])
+  vehicle       Vehicle         @relation(fields: [vehicleId], references: [id])
 
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  reservations  Reservations[]
+
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
 
   @@map("rides")
+}
+
+enum ReservationStatus {
+  PENDENTE
+  RECUSADA
+  ACEITA
+}
+
+model Reservations {
+  id        String            @id @default(uuid())
+
+  rideId    String
+  ownerId   String
+  status    ReservationStatus @default(PENDENTE)
+  
+  ride      Ride              @relation(fields: [rideId], references: [id])
+  owner     User              @relation(fields: [ownerId], references: [id])
+
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  @@map("reservations")
 }
