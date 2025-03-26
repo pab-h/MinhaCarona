@@ -1,4 +1,5 @@
 import { ReservationType } from "../../types/ReservationType";
+import { ReservationStatus } from "@prisma/client";
 
 export interface ReservationRepository {
 
@@ -13,5 +14,10 @@ export interface ReservationRepository {
     findByRideId(rideId: string): Promise<ReservationType[]>;
 
     findByOwnerId(ownerId: string): Promise<ReservationType[]>;
+
+    updateStatus(
+        id: string, 
+        status: ReservationStatus
+    ): Promise<ReservationType>;
 
 }

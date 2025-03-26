@@ -1,6 +1,7 @@
 import { randomBytes } from "crypto";
 import { ReservationType } from "../../types/ReservationType";
 import { ReservationRepository } from "../interface/ReservationRepository";
+import { ReservationStatus } from "@prisma/client";
 
 export class ReservationInMemoryRepository implements ReservationRepository {
 
@@ -51,6 +52,22 @@ export class ReservationInMemoryRepository implements ReservationRepository {
             .filter(reservation => reservation.rideId == rideId);   
     
         return reservations;    
+    }
+
+    public async updateStatus(
+        id: string, 
+        status: ReservationStatus
+    ): Promise<ReservationType> {
+        const reservation = this.reservations.find(ride => ride.id == id);
+
+        if (!reservation) {
+            throw new Error(`A reserva ${id} não existe`);
+        }
+
+        reservation.status = status;
+        reservation.updatedAt = new Date();
+
+        return reservation;
     }
 
 }
