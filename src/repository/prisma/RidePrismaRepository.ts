@@ -22,4 +22,11 @@ export class RidePrismaRepository implements RideRepository {
             }
         });
     }
+
+    public async findById(id: string): Promise<RideType | null> {
+        return await prisma.ride.findUnique({
+            where: { id }
+        });
+    }
+
 }

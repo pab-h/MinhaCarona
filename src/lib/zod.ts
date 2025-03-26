@@ -1,5 +1,5 @@
 import z from "zod";
-import { VehicleEnum } from "../types/VehicleType";
+import { ReservationStatus, VehicleEnum } from "@prisma/client";
 
 export const idSchema = z.object({
     id: z
@@ -51,4 +51,10 @@ export const createRideSchema = z.object({
     vehicleId: z
         .string({ required_error: " é requrida" })
         .uuid({ message: "o id é um UUID" }),
+});
+
+
+export const updateReservationSchema = z.object({
+    status: z
+        .nativeEnum(ReservationStatus, { required_error: "O status é requerido" })
 });

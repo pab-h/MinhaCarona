@@ -7,4 +7,6 @@ export interface RideRepository {
         "id" | "createdAt" | "updatedAt"
     >): Promise<RideType>
 
+    findById(id: string): Promise<RideType | null>
+
 }
