@@ -10,6 +10,18 @@ export class RideInMemoryRepository implements RideRepository {
         this.rides = [];
     }
 
+    public async findByTravel(
+        origin: string, 
+        destination: string, 
+        date: Date
+    ): Promise<RideType[]> {
+        return this.rides.filter(
+            ride => ride.origin == origin           && 
+                    ride.destination == destination && 
+                    ride.date.getTime() === date.getTime()
+        );
+    }
+
     public async create({
         date,
         destination,

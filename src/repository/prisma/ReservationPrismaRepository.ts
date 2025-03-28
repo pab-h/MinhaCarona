@@ -1,3 +1,4 @@
+import { ReservationStatus } from "@prisma/client";
 import { prisma } from "../../lib/prisma";
 import { ReservationType } from "../../types/ReservationType";
 import { ReservationRepository } from "../interface/ReservationRepository";
@@ -33,6 +34,17 @@ export class ReservationPrismaRepository implements ReservationRepository {
     public async findByRideId(rideId: string): Promise<ReservationType[]> {
         return await prisma.reservations.findMany({
             where: { rideId }
+        });
+    }
+
+    public async updateStatus(
+        id: string, status: ReservationStatus
+    ): Promise<ReservationType> {
+        return await prisma.reservations.update({
+            data: {
+                status
+            },
+            where: { id }
         });
     }
 
