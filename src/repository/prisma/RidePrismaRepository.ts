@@ -9,8 +9,17 @@ export class RidePrismaRepository implements RideRepository {
         destination: string, 
         date: Date
     ): Promise<RideType[]> {
+        const gte = new Date(date.setHours(0, 0, 0, 0));
+
+        let lt = new Date(date.setHours(23, 59, 59, 999));
+            lt = new Date(lt.getTime() + 1); 
+
         return await prisma.ride.findMany({
-            where: { origin, destination, date }
+            where: {
+                origin, 
+                destination, 
+                date: { gte, lt } 
+            }
         });
     }
 
