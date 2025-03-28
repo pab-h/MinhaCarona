@@ -6,8 +6,7 @@ const routes = Router();
 
 const rideController = new RideController(); 
 
-routes.use(ensureAuthentication);
-
-routes.post("/", rideController.create);
+routes.post("/", ensureAuthentication, rideController.create);
+routes.get("/", rideController.findByTravel);
 
 export default routes;
