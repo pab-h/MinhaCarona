@@ -7,6 +7,12 @@ export interface RideRepository {
         "id" | "createdAt" | "updatedAt"
     >): Promise<RideType>
 
-    findById(id: string): Promise<RideType | null>
+    findById(id: string): Promise<RideType | null>;
+    
+    findByTravel(
+        origin: string, 
+        destination: string,
+        date: Date
+    ): Promise<RideType[]>;
 
 }

@@ -3,21 +3,36 @@ import { RideInMemoryRepository } from '../../../repository/inMemory/RideInMemor
 import { VehicleInMemoryRepository } from '../../../repository/inMemory/VehicleInMemoryRepository';
 
 import { ArgumentNotValidError } from '../../../service/error/ArgumentNotValidError';
+
 import { CreateRideService } from '../../../service/ride/CreateRideService';
+import { CreateUserService } from '../../../service/user/CreateUserService';
+import { CreateVehicleService } from '../../../service/vehicle/CreateVehicleService';
+
 import { describe, it, expect, beforeEach } from 'vitest';
 
 
 describe('Register service', () => {
-  let userRepository: UserInMemoryRepository;
-  let rideRepository: RideInMemoryRepository;
+  let userRepository:    UserInMemoryRepository;
+  let rideRepository:    RideInMemoryRepository;
   let vehicleRepository: VehicleInMemoryRepository;
 
-  let createService: CreateRideService;
+  let createService:        CreateRideService;
+  let createUserService:    CreateUserService;
+  let createVehicleService: CreateVehicleService;
 
   beforeEach(() => {
     rideRepository = new RideInMemoryRepository();    
     userRepository = new UserInMemoryRepository();
     vehicleRepository = new VehicleInMemoryRepository();
+
+    createUserService = new CreateUserService(
+      userRepository
+    );
+
+    createVehicleService = new CreateVehicleService(
+      vehicleRepository,
+      userRepository
+    );
 
     createService = new CreateRideService(
       rideRepository,
@@ -27,13 +42,13 @@ describe('Register service', () => {
   });
 
   it("should be able to register a new ride", async () => {
-    const user = await userRepository.create({
+    const {user} = await createUserService.execute({
       email: "johon@gmail.com",
       name: "John",
       password: "senhabraba12312"
     });
 
-    const vehicle = await vehicleRepository.create({
+    const {vehicle} = await createVehicleService.execute({
       color: "Vermelha",
       model: "Honda",
       ownerId: user.id,
@@ -55,13 +70,13 @@ describe('Register service', () => {
 
 
   it("should be not able to register a new ride with non exist user", async () => {
-    const user = await userRepository.create({
+    const {user} = await createUserService.execute({
       email: "johon@gmail.com",
       name: "John",
       password: "senhabraba12312"
     });
 
-    const vehicle = await vehicleRepository.create({
+    const {vehicle} = await createVehicleService.execute({
       color: "Vermelha",
       model: "Honda",
       ownerId: user.id,
@@ -83,7 +98,7 @@ describe('Register service', () => {
 
 
   it("should be not able to register a new ride with non exist vehicle", async () => {
-    const user = await userRepository.create({
+    const {user} = await createUserService.execute({
       email: "johon@gmail.com",
       name: "John",
       password: "senhabraba12312"
@@ -103,19 +118,19 @@ describe('Register service', () => {
 
 
   it("should not be able to register a new ride if the user does not own the vehicle", async () => {
-    const userA = await userRepository.create({
-      email: "johon@gmail.com",
+    const { user: userA } = await createUserService.execute({
+      email: "johonA@gmail.com",
       name: "John",
       password: "senhabraba12312"
     });
 
-    const userB = await userRepository.create({
-      email: "johon@gmail.com",
+    const { user: userB } = await createUserService.execute({
+      email: "johonB@gmail.com",
       name: "John",
       password: "senhabraba12312"
     });
 
-    const vehicle = await vehicleRepository.create({
+    const {vehicle} = await createVehicleService.execute({
       color: "Vermelha",
       model: "Honda",
       ownerId: userA.id,
@@ -137,13 +152,13 @@ describe('Register service', () => {
 
 
   it("should be not able to register a new trip with less than one seat available in the vehicle", async () => {
-    const user = await userRepository.create({
+    const {user} = await createUserService.execute({
       email: "johon@gmail.com",
       name: "John",
       password: "senhabraba12312"
     });
 
-    const vehicle = await vehicleRepository.create({
+    const {vehicle} = await createVehicleService.execute({
       color: "Vermelha",
       model: "Honda",
       ownerId: user.id,

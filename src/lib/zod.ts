@@ -53,8 +53,17 @@ export const createRideSchema = z.object({
         .uuid({ message: "o id é um UUID" }),
 });
 
-
 export const updateReservationSchema = z.object({
     status: z
         .nativeEnum(ReservationStatus, { required_error: "O status é requerido" })
+});
+
+export const findRideByTravelSchema = z.object({
+    origin: z
+        .string({ required_error: " é requrida" }),
+    destination: z
+        .string({ required_error: " é requrida" }),
+    date: z
+        .coerce
+        .date({ required_error: " é requrida" }),
 });
