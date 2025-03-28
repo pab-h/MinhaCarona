@@ -3,6 +3,17 @@ import { RideType } from "../../types/RideType";
 import { RideRepository } from "../interface/RideRepository";
 
 export class RidePrismaRepository implements RideRepository {
+
+    public async findByTravel(
+        origin: string, 
+        destination: string, 
+        date: Date
+    ): Promise<RideType[]> {
+        return await prisma.ride.findMany({
+            where: { origin, destination, date }
+        });
+    }
+
     public async create({
         date,
         destination,
