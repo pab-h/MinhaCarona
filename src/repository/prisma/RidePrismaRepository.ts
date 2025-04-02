@@ -1,8 +1,33 @@
 import { prisma } from "../../lib/prisma";
+
 import { RideType } from "../../types/RideType";
+import { TravelType } from "../../types/RideType";
+
 import { RideRepository } from "../interface/RideRepository";
 
 export class RidePrismaRepository implements RideRepository {
+
+    public async findFrequentTravels(): Promise<TravelType[]> {
+
+        const frequentTravels = await prisma.ride.groupBy({
+            by: ["origin", "destination"],
+            _count: {
+                id: true
+            },
+            orderBy: {
+                _count: { id: "desc" }
+            },
+            take: 10
+        });
+
+        return frequentTravels.map(travel => {
+            return {
+                destination: travel.destination,
+                origin:      travel.origin
+            }
+        });
+
+    }
 
     public async findByTravel(
         origin: string, 

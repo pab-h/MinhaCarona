@@ -1,5 +1,5 @@
 import { randomBytes } from "crypto";
-import { RideType } from "../../types/RideType";
+import { RideType, TravelType } from "../../types/RideType";
 import { RideRepository } from "../interface/RideRepository";
 
 export class RideInMemoryRepository implements RideRepository {
@@ -8,6 +8,45 @@ export class RideInMemoryRepository implements RideRepository {
 
     public constructor() {
         this.rides = [];
+    }
+
+    public async findFrequentTravels(): Promise<TravelType[]> {
+        
+        const travelCountMap = new Map<string, number>();
+
+        for (const ride of this.rides) {
+            const key = `${ride.origin}->${ride.destination}`;
+
+            travelCountMap.set(
+                key,
+                (travelCountMap.get(key) || 0) + 1
+            );
+        }
+
+        const travelFrequencies: (TravelType & { count: number })[] = [];
+
+        travelCountMap.forEach((count, key) => {
+            const [ origin, destination ] = key.split("->");
+            
+            travelFrequencies.push({
+                origin,
+                destination,
+                count
+            });
+        });
+
+
+        const sortedTravels = travelFrequencies
+            .sort((a, b) => b.count - a.count)
+            .slice(0, 10);
+
+        return sortedTravels.map(travel => {
+            return {
+                destination: travel.destination,
+                origin:      travel.origin
+            }
+        });
+
     }
 
     public async findByTravel(
