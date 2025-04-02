@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 
 import { CreateRideService } from "../../service/ride/CreateRideService";
 import { FindByTravelRideService } from "../../service/ride/FindByTravelRideService";
+import { FindFrequentTravelsRideService } from "../../service/ride/FindFrequentTravelsRideService";
 
 import { RidePrismaRepository } from "../../repository/prisma/RidePrismaRepository";
 import { UserPrismaRepository } from "../../repository/prisma/UserPrismaRepository";
@@ -11,6 +12,16 @@ import { createRideSchema } from "../../lib/zod";
 import { findRideByTravelSchema } from "../../lib/zod";
 
 export class RideController {
+
+    public async findFrequentTravels(req: Request, res: Response) {
+        const findFrequentTravelsService = new FindFrequentTravelsRideService(
+            new RidePrismaRepository()
+        );
+
+        const { travels } = await findFrequentTravelsService.execute();
+
+        res.status(200).json(travels);
+    }
 
     public async findByTravel(req: Request, res: Response) {
         const {

@@ -1,4 +1,5 @@
 import { RideType } from "../../types/RideType";
+import { TravelType } from "../../types/RideType";
 
 export interface RideRepository {
 
@@ -14,5 +15,7 @@ export interface RideRepository {
         destination: string,
         date: Date
     ): Promise<RideType[]>;
+
+    findFrequentTravels(): Promise<TravelType[]>;
 
 }
